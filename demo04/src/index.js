@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import Exam01 from './components/Exam01';
+import Exam02 from './components/Exam02';
+import Exam03 from './components/Exam03';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -10,6 +12,10 @@ root.render(
   <React.StrictMode>
     <App />
     <Exam01 />
+    <hr/>
+    <Exam02 />
+    <hr/>
+    <Exam03 />
   </React.StrictMode>
 );
 
