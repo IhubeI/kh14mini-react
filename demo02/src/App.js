@@ -6,8 +6,8 @@ const App = ()=>{
 
 
   // 0을 초기값으로 가지는 count라는 상태를 만드세요 (변경은 setCount로!)
+  // [변수, 변수의setterMethod]
   const [count, setCount] = useState(0);
-
   return (
     <>
       <h1>클릭 횟수 : {count}</h1>
