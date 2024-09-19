@@ -14,6 +14,10 @@ import Exam05 from './components/Exam05';
 import Exam06 from './components/Exam06';
 import Exam07 from './components/Exam07';
 import Exam08 from './components/Exam08';
+import Exam09 from './components/Exam09';
+import Exam10 from './components/Exam10';
+import Exam11 from './components/Exam11';
+import Exam12 from './components/Exam12';
 import reportWebVitals from './reportWebVitals';
 import 'typeface-roboto'; // 서체 패키지 임포트
 
@@ -36,6 +40,14 @@ root.render(
     <Exam07/>
     <hr/>
     <Exam08/>
+    <hr/>
+    <Exam09/>
+    <hr/>
+    <Exam10/>
+    <hr/>
+    <Exam11/>
+    <hr/>
+    <Exam12/>
   </React.StrictMode>
 );
 
