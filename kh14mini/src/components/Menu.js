@@ -1,5 +1,13 @@
+
+// 주의사항
+// React는 한 페이지이므로 a태그로 이동 설정하지 않는다
+// 대신, react-router-dom에 있는 <NavLink>를 사용
+// NavLink는 Router의 상황에 맞는 주소를 생성하며, a태그로 변환된다
+
 import { NavLink } from "react-router-dom";
-import { FaUser, FaSignInAlt } from "react-icons/fa"; // react-icons에서 아이콘 임포트
+// 아이콘
+import { FaHouseUser } from "react-icons/fa";
+import { FaRightToBracket } from "react-icons/fa6";
 
 const Menu = () => {
     return (
@@ -30,13 +38,14 @@ const Menu = () => {
                                     data-bs-toggle="dropdown" href="#" role="button"
                                     aria-haspopup="true" aria-expanded="false">예제</a>
                                 <div className="dropdown-menu">
-                                    <NavLink className="dropdown-item" to="/ex01">예제1번</NavLink>
-                                    <NavLink className="dropdown-item" to="/ex02">예제2번</NavLink>
-                                    <NavLink className="dropdown-item" to="/todolist">To-Do 리스트</NavLink>
-                                    <NavLink className="dropdown-item" to="/fruit-cart">과일 리스트</NavLink>
-                                    <NavLink className="dropdown-item" to="/bank-acc">통장관리</NavLink>
+                                    {/* <NavLink className="dropdown-item" to="/ex01">예제1번</NavLink> */}
+
                                 </div>
                             </li>
+
+
+
+
                             <li className="nav-item dropdown">
                                 <a className="nav-link dropdown-toggle"
                                     data-bs-toggle="dropdown" href="#" role="button"
@@ -54,16 +63,16 @@ const Menu = () => {
 
                         <ul className="navbar-nav">
                             <li className="nav-item">
-                                <a className="nav-link" href="#">
-                                    <FaUser /> {/* font-awesome 대신 react-icons 사용 */}
+                                <NavLink className="nav-link" to="/join">
+                                <FaHouseUser className="me-1"/>
                                     회원가입
-                                </a>
+                                </NavLink>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="#">
-                                    <FaSignInAlt /> {/* 로그인 아이콘 교체 */}
+                                <NavLink className="nav-link" to="/login">
+                                <FaRightToBracket className="me-1"/>
                                     로그인
-                                </a>
+                                </NavLink>
                             </li>
                         </ul>
                     </div>

@@ -1,5 +1,6 @@
 import Jumbotron from "./Jumbotron";
 import { useState, useCallback } from 'react';
+import { FaTimes } from 'react-icons/fa'; // react-icons에서 아이콘 임포트
 
 const Todolist = () => {
 
@@ -66,7 +67,9 @@ const Todolist = () => {
                         <h2>{todo}</h2>
                     </div>
                     <div className="col d-flex">
-                        <button className="btn btn-warning" onClick={e => removeData(index)}>X</button>
+                        <button className="btn btn-warning" onClick={e => removeData(index)}>
+                            <FaTimes />
+                        </button>
                     </div>
                 </div>
             ))}

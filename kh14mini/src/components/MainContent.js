@@ -1,10 +1,9 @@
 import { Routes, Route } from "react-router";
-import Exam01 from "./Exam01";
-import Exam02 from "./Exam02";
 import Home from "./Home";
-import Todolist from "./Todolist";
-import FruitCart from "./FruitCart";
-import BankAccount from "./BankAccount";
+import Join from "./Join";
+import Login from "./Login";
+
+
 
 const MainContent = () => {
     return (
@@ -19,11 +18,8 @@ const MainContent = () => {
                         {/* 주소에 따라 배치될 화면에 대한 설정(라우터) */}
                         <Routes>
                             <Route exact path="/" element={<Home />} />
-                            <Route path="/ex01" element={<Exam01 />} />
-                            <Route path="/ex02" element={<Exam02 />} />
-                            <Route path="/todolist" element={<Todolist />} />
-                            <Route path="/fruit-cart" element={<FruitCart />} />
-                            <Route path="/bank-acc" element={<BankAccount />} />
+                            <Route path="/join" element={<Join />} />
+                            <Route path="/login" element={<Login />} />
                         </Routes>
 
 
