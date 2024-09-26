@@ -1,10 +1,15 @@
 // src/components/Login/LoginPage.js
 import React, { useCallback, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import SignUpModal from './SignUpModal'; // 회원가입 모달 컴포넌트 임포트
 import './LoginPage.css'; // CSS 파일 임포트
 import axios from "axios";
 
 const LoginPage = () => {
+
+    //navigate
+    const navigate = useNavigate();
+
     //state
     const [input, setInput] = useState({
         empId : '',
@@ -30,11 +35,16 @@ const LoginPage = () => {
         try {
             const resp = await axios.post("http://localhost:8080/emp/login", input);
             console.log("로그인 성공:", resp.data);
+            localStorage.setItem('accessToken', resp.data.accessToken);
+            localStorage.setItem('refreshToken', resp.data.refreshToken);
+            
+            // 메인 페이지로 리다이렉트
+            navigate('/main'); // '/main' 경로로 리다이렉트
         } catch (e) {
             console.error("로그인 실패:", e.response ? e.response.data : e.message);
         }
         
-    }, [input]);
+    }, [input, navigate]);
 
     return (
         <div className="container col-xl-10 col-xxl-8 px-4 py-5">
