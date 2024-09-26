@@ -42,6 +42,17 @@ const Menu = () => {
                                 <NavLink className="dropdown-item" to="/bank-acc">통장관리</NavLink>
                             </div>
                         </li>
+                        {/* 검색 */}
+                        <li className="nav-item dropdown">
+                            <a className="nav-link dropdown-toggle"
+                                data-bs-toggle="dropdown" href="#" role="button"
+                                aria-haspopup="true" aria-expanded="false">검색</a>
+                            <div className="dropdown-menu">
+                                <NavLink className="dropdown-item" to="/search/autocomplete">자동완성 예제</NavLink>
+                                <NavLink className="dropdown-item" to="/search/autocomplete2">자동완성 예제2</NavLink>
+                            </div>
+                        </li>
+
                         <li className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle"
                                 data-bs-toggle="dropdown" href="#" role="button"

@@ -13,6 +13,8 @@ import BookAdd from "./BookAdd";
 import BookDetail from "./BookDetail";
 import BookEdit from "./BookEdit";
 import PageNotFound from "./error/PageNotFound";
+import AutoComplete from "./AutoComplete";
+import AutoComplete2 from "./AutoComplete2";
 
 const MainContent = () => {
     return (<>
@@ -36,11 +38,16 @@ const MainContent = () => {
                         <Route path="/book/list" element={<BookList />} />
                         <Route path="/emp" element={<Emp />} />
                         <Route path="/book/add" element={<BookAdd />} />
+                        {/* 검색에 대한 예제 */}
+                        <Route path="/search/autocomplete" element={<AutoComplete/>}/>
+                        <Route path="/search/autocomplete2" element={<AutoComplete2/>}/>
                         {/* 경로변수를 사용할 경우 콜론과 이름을 합쳐 변수명으로 지정 */}
                         <Route path="/book/detail/:bookId" element={<BookDetail />} />
                         <Route path="/book/edit/:bookId" element={<BookEdit />} />
                         {/* 나머지 경로(*) 패턴을 지정해서 특정 주소를 전부 감지하게 할 수 있다. */}
                         <Route path="*" element={<PageNotFound />} />
+
+                        
                     </Routes>
 
                 </div>

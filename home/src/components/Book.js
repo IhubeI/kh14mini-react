@@ -29,7 +29,7 @@ const Book = () => {
     //effect
     useEffect(() => {
         loadBookList();
-    }, []);
+    });
 
     //callback
     const loadBookList = useCallback(async () => {
@@ -129,15 +129,35 @@ const Book = () => {
         return input?.bookId === "";
     }, [input]);
 
+    //검색창 관련
+    const [column, setColumn] = useState("book_title");
+    const [keword, setKeyword] = useState("");
+
+
+    const searchBookList = useCallback(async e => {
+
+        if (keword.length === 0) return;
+
+        const resp = await axios.get(`http://localhost:8080/book/column/${column}/keyword/${encodeURIComponent(keword)}`);
+        setBookList(resp.data);
+    }, [column, keword, bookList]);
+
     //view
     return (<>
         {/* 제목 */}
         <Jumbotron title="도서 관리" content="SPA(Single Page Application) 방식" />
 
-        {/* 검색창 */}
-        <div className="row mt-4">
-            <div className="col">
-                검색창 자리
+        {/* 검색 화면 */}
+        <div className="row mt-2">
+            <div className="col-md-8 col-sm-10">
+                <div className="input-group">
+                    <select name="column" className="form-select w-auto" value={column} onChange={e => setColumn(e.target.value)}>
+                        <option value="book_title">책제목</option>
+                        <option value="book_author">작가명</option>
+                    </select>
+                    <input type="text" className="form-control w-auto" value={keword} onChange={e => setKeyword(e.target.value)} />
+                    <button type="button" className="btn btn-secondary" onClick={searchBookList}>검색</button>
+                </div>
             </div>
         </div>
 
@@ -150,6 +170,7 @@ const Book = () => {
                 </button>
             </div>
         </div>
+
 
         {/* 목록 표시 자리 */}
         <div className="row mt-4">

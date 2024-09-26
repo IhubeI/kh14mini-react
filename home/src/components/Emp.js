@@ -22,7 +22,7 @@ const Emp = () => {
         empSal: ""
     });
     const [target, setTarget] = useState({//수정
-        empNo:"",
+        empNo: "",
         empName: "",
         empDept: "",
         empDate: "",
@@ -74,13 +74,13 @@ const Emp = () => {
             method: "post",
             data: input
         })
-        .then(resp => {
-            loadEmpList();//목록 재로딩
-            closeInsertModal();//모달 닫기
-            //등록 완료 알림 추가
-            //window.alert("등록 완료!");//알림창 자체가 차단될 수 있음
-            toast.success("등록 완료");
-        });
+            .then(resp => {
+                loadEmpList();//목록 재로딩
+                closeInsertModal();//모달 닫기
+                //등록 완료 알림 추가
+                //window.alert("등록 완료!");//알림창 자체가 차단될 수 있음
+                toast.success("등록 완료");
+            });
     }, [input]);
 
     //input 청소
@@ -95,35 +95,35 @@ const Emp = () => {
     }, [input]);
 
     //target 입력
-    const changeTarget = useCallback(e=>{
+    const changeTarget = useCallback(e => {
         setTarget({
-            ...target, 
-            [e.target.name] : e.target.value
+            ...target,
+            [e.target.name]: e.target.value
         });
     }, [target]);
 
     //target 청소
-    const clearTarget = useCallback(()=>{
+    const clearTarget = useCallback(() => {
         setTarget({
-            empNo:"", empName:"", empDept:"",
-            empDate:"", empRank:"", empSal:""
+            empNo: "", empName: "", empDept: "",
+            empDate: "", empRank: "", empSal: ""
         });
     }, [target]);
 
     //target 저장
     //- 이미 수정할 내용은 target이라는 state에 저장되어 있음
     //- 백엔드의 PUT 매핑으로 전송하여 수정한 뒤 목록 갱신 및 모달 닫기
-    const saveTarget = useCallback(()=>{
+    const saveTarget = useCallback(() => {
         axios({
-            url:"http://localhost:8080/emp/",
-            method:"put",//patch
+            url: "http://localhost:8080/emp/",
+            method: "put",//patch
             data: target
         })
-        .then(resp=>{
-            loadEmpList();//목록 재로딩
-            closeEditModal();//수정 모달 창 닫기
-            toast.success("사원 수정 완료");//알림
-        });
+            .then(resp => {
+                loadEmpList();//목록 재로딩
+                closeEditModal();//수정 모달 창 닫기
+                toast.success("사원 수정 완료");//알림
+            });
     }, [target]);
 
     // ref(참조)
@@ -159,19 +159,31 @@ const Emp = () => {
 
     // 수정 모달과 관련된 처리
     const editModal = useRef();
-    const openEditModal = useCallback((emp)=>{
+    const openEditModal = useCallback((emp) => {
         const tag = Modal.getOrCreateInstance(editModal.current);
         tag.show();
 
         //setTarget(emp);//안됨(리모컨만 복사하고 본체를 공유)
-        setTarget({...emp});//emp를 복사해서 target에 전달
+        setTarget({ ...emp });//emp를 복사해서 target에 전달
     }, [editModal]);
-    const closeEditModal = useCallback(()=>{
+    const closeEditModal = useCallback(() => {
         const tag = Modal.getInstance(editModal.current);
         tag.hide();
 
         clearTarget();//입력창 정리
     }, [editModal]);
+
+    //검색창 관련
+    const [column, setColumn] = useState("emp_name");
+    const [keword, setKeyword] = useState("");
+
+    const searchEmpList = useCallback(async e => {
+
+        if (keword.length === 0) return;
+
+        const resp = await axios.get(`http://localhost:8080/emp/column/${column}/keyword/${encodeURIComponent(keword)}`);
+        setEmpList(resp.data);
+    }, [column, keword, empList]);
 
     //view
     return (<>
@@ -184,6 +196,21 @@ const Emp = () => {
                     onClick={openInsertModal}>
                     신규 사원 등록
                 </button>
+            </div>
+        </div>
+
+        {/* 검색 화면 */}
+        <div className="row mt-2">
+            <div className="col-md-8 col-sm-10">
+                <div className="input-group">
+                    <select name="column" className="form-select w-auto" value={column} onChange={e => setColumn(e.target.value)}>
+                        <option value="emp_name">사원명</option>
+                        <option value="emp_dept">부서명</option>
+                        <option value="emp_rank">직급</option>
+                    </select>
+                    <input type="text" className="form-control w-auto" value={keword} onChange={e => setKeyword(e.target.value)} />
+                    <button type="button" className="btn btn-secondary" onClick={searchEmpList}>검색</button>
+                </div>
             </div>
         </div>
 
@@ -207,10 +234,10 @@ const Emp = () => {
                                 <td>{emp.empRank}</td>
                                 <td>
                                     <FaEdit className="text-warning"
-                                        onClick={e=>openEditModal(emp)}/>
+                                        onClick={e => openEditModal(emp)} />
                                     <FaTrash className="text-danger ms-2"
                                         //onClick={deleteEmp}
-                                        onClick={e => deleteEmp(emp)}/>
+                                        onClick={e => deleteEmp(emp)} />
                                 </td>
                             </tr>
                         ))}
@@ -375,7 +402,7 @@ const Emp = () => {
                     <div className="modal-footer">
                         <button type="button" className="btn btn-secondary btn-manual-close"
                             onClick={closeEditModal}>취소</button>
-                        <button type="button" className="btn btn-success" 
+                        <button type="button" className="btn btn-success"
                             onClick={saveTarget}>
                             수정하기
                         </button>
