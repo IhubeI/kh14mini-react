@@ -49,7 +49,8 @@ const Menu = () => {
                             <div className="dropdown-menu">
                                 <NavLink className="dropdown-item" to="/poketmon">포켓몬스터</NavLink>
                                 <NavLink className="dropdown-item" to="/emp">사원정보</NavLink>
-                                <a className="dropdown-item" href="#">도서정보</a>
+                                <NavLink className="dropdown-item" to="/book/spa">도서정보</NavLink>
+                                <NavLink className="dropdown-item" to="/book/list">도서목록</NavLink>
                                 {/* <div className="dropdown-divider"></div> */}
                             </div>
                         </li>

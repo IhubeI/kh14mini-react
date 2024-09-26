@@ -1,13 +1,14 @@
-import Menu from "./components/Menu";
 import MainContent from "./components/MainContent";
-import { HashRouter, BrowserRouter } from "react-router-dom";
+import Menu from "./components/Menu";
 
-const App = () => {
+import { BrowserRouter, HashRouter } from "react-router-dom";
+
+const App = ()=>{
   return (
     <>
       <HashRouter>
-        <Menu />
-        <MainContent />
+        <Menu/>
+        <MainContent/>
       </HashRouter>
     </>
   );
