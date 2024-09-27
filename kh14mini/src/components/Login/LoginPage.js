@@ -1,14 +1,19 @@
 // src/components/Login/LoginPage.js
 import React, { useCallback, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import SignUpModal from './SignUpModal'; // 회원가입 모달 컴포넌트 임포트
 import './LoginPage.css'; // CSS 파일 임포트
 import axios from "axios";
 
 const LoginPage = () => {
+
+    //navigate
+    const navigate = useNavigate();
+
     //state
     const [input, setInput] = useState({
-        empId : '',
-        empPassword : ''
+        empId: '',
+        empPassword: ''
     });
 
     const [showModal, setShowModal] = useState(false); // 모달 표시 상태 관리
@@ -23,19 +28,19 @@ const LoginPage = () => {
     }, [input]);
 
 
-    const loginUser = useCallback(async ()=>{
+    const loginUser = useCallback(async () => {
         //input의 형식 검사 후 차단 또는 허용 
         if (input.empId.length === 0 || input.empPassword.length === 0) return;
 
         try {
-            await axios.post("http://localhost:8080/emp/login", input, {withCredentials: true});
-           
+            await axios.post("http://localhost:8080/emp/login", input, { withCredentials: true });
+
             console.log("로그인 성공");
         } catch (e) {
             console.error(e.response ? e.response.data : e.message);
         }
-        
-    }, [input]);
+
+    }, [input, navigate]);
 
     return (
         <div className="container col-xl-10 col-xxl-8 px-4 py-5">
