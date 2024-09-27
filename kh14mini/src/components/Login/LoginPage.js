@@ -28,10 +28,11 @@ const LoginPage = () => {
         if (input.empId.length === 0 || input.empPassword.length === 0) return;
 
         try {
-            const resp = await axios.post("http://localhost:8080/emp/login", input);
-            console.log("로그인 성공:", resp.data);
+            await axios.post("http://localhost:8080/emp/login", input, {withCredentials: true});
+           
+            console.log("로그인 성공");
         } catch (e) {
-            console.error("로그인 실패:", e.response ? e.response.data : e.message);
+            console.error(e.response ? e.response.data : e.message);
         }
         
     }, [input]);
