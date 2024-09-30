@@ -47,8 +47,8 @@ const App = () => {
     <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
       <Routes>
         <Route path="/" element={isLoggedIn ? <MainPage /> : <LoginPage />} />
-        <Route path="/main/*" element={isLoggedIn ? <MainPage /> : <LoginPage />}/>
-        <Route path="chat" element={<Chat />} /> {/* /main/chat 경로 */}
+        <Route path="/main/*" element={isLoggedIn ? <MainPage /> : <LoginPage />} />
+        <Route path="chat" element={isLoggedIn ? <Chat /> : <LoginPage />} /> {/* /main/chat 경로 */}
         {/* 페이지가 없으면 보여줄 페이지 - 404 Not Found */}
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
