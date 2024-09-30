@@ -1,18 +1,58 @@
-import LoginPage from "./components/Login/LoginPage";
+import LoginPage from './components/Login/LoginPage';
 import MainPage from './components/Main/MainPage';
-import { HashRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
-import Footer from './components/Footer/Footer';
+import 'bootstrap/dist/js/bootstrap.bundle.js';
+import React, { createContext, useEffect, useState } from 'react';
+import NotFoundPage from './components/NotFound/NotFoundPage';
+import axios from 'axios';
 
 const App = () => {
+  const navigate = useNavigate();
+
+  // AuthContext 생성
+  const AuthContext = createContext();
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // 로그인 상태 확인 및 인증 처리
+  useEffect(() => {
+    const checkAuth = async () => {
+      const loggedIn = localStorage.getItem('isLoggedIn') === 'true'; // 'true'로 비교해야 함
+      setIsLoggedIn(loggedIn);
+
+      if (loggedIn) {
+        navigate('/main');
+        try {
+          const response = await axios.post('http://localhost:8080/auth/', {}, { withCredentials: true });
+
+          console.log(response);
+          if (response.status === 200) {
+            localStorage.setItem('isLoggedIn', 'true'); // 로그인 상태 저장
+            setIsLoggedIn(true); // 상태 업데이트
+            navigate('/main'); // 메인 페이지로 이동
+          }
+        } catch (error) {
+          console.error('Error during authentication:', error);
+        }
+      } else {
+        navigate('/');
+      }
+    };
+
+    checkAuth(); // 인증 상태 확인 호출
+  }, [navigate]);
+
   return (
-    <HashRouter>
+    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
       <Routes>
-        <Route path="/" exact element={<LoginPage />} /> {/* 로그인 페이지 */}
-        <Route path="/main" element={<MainPage />} /> {/* 메인 페이지 */}
+        <Route path="/" element={isLoggedIn ? <MainPage /> : <LoginPage />} />
+        <Route path="/main/*" element={isLoggedIn ? <MainPage /> : <LoginPage />} />
+
+        {/* 페이지가 없으면 보여줄 페이지 - 404 Not Found */}
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
-      <Footer />
-    </HashRouter>
+    </AuthContext.Provider>
   );
 };
 
