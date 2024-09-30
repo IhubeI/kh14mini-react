@@ -7,6 +7,7 @@ import React, { createContext, useEffect, useState } from 'react';
 import NotFoundPage from './components/NotFound/NotFoundPage';
 import Chat from "./components/Chat/Chat";
 import axios from 'axios';
+import ApprovalForm from "./components/Approval/ApprovalForm";
 
 const App = () => {
   const navigate = useNavigate();
@@ -49,6 +50,7 @@ const App = () => {
         <Route path="/" element={isLoggedIn ? <MainPage /> : <LoginPage />} />
         <Route path="/main/*" element={isLoggedIn ? <MainPage /> : <LoginPage />} />
         <Route path="chat" element={isLoggedIn ? <Chat /> : <LoginPage />} /> {/* /main/chat 경로 */}
+        <Route path="/approval" element={isLoggedIn ? <ApprovalForm /> : <LoginPage />} />
         {/* 페이지가 없으면 보여줄 페이지 - 404 Not Found */}
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
