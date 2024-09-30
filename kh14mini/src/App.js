@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.bundle.js';
 import React, { createContext, useEffect, useState } from 'react';
 import NotFoundPage from './components/NotFound/NotFoundPage';
+import Chat from "./components/Chat/Chat";
 import axios from 'axios';
 
 const App = () => {
@@ -22,18 +23,17 @@ const App = () => {
       setIsLoggedIn(loggedIn);
 
       if (loggedIn) {
-        navigate('/main');
         try {
-          const response = await axios.post('http://localhost:8080/auth/', {}, { withCredentials: true });
+          const resp = await axios.post('http://localhost:8080/auth/', {}, { withCredentials: true });
 
-          console.log(response);
-          if (response.status === 200) {
+          console.log(resp);
+          if (resp.status === 200) {
             localStorage.setItem('isLoggedIn', 'true'); // 로그인 상태 저장
             setIsLoggedIn(true); // 상태 업데이트
-            navigate('/main'); // 메인 페이지로 이동
           }
         } catch (error) {
           console.error('Error during authentication:', error);
+          navigate('/');
         }
       } else {
         navigate('/');
@@ -47,8 +47,8 @@ const App = () => {
     <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
       <Routes>
         <Route path="/" element={isLoggedIn ? <MainPage /> : <LoginPage />} />
-        <Route path="/main/*" element={isLoggedIn ? <MainPage /> : <LoginPage />} />
-
+        <Route path="/main/*" element={isLoggedIn ? <MainPage /> : <LoginPage />}/>
+        <Route path="chat" element={<Chat />} /> {/* /main/chat 경로 */}
         {/* 페이지가 없으면 보여줄 페이지 - 404 Not Found */}
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
