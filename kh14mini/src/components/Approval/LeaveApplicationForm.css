@@ -1,32 +1,56 @@
-/* 휴직 신청서 스타일 */
-.container {
+/* LeaveRequestForm.css */
+body {
+  font-family: Arial, sans-serif;
+}
+
+.document-container {
   width: 80%;
   margin: 0 auto;
   border: 1px solid #000;
   padding: 20px;
-  font-family: Arial, sans-serif;
 }
 
 .title {
   text-align: center;
-  font-weight: bold;
   font-size: 24px;
+  margin-bottom: 10px;
 }
 
-.form-group {
-  display: flex;
-  margin-bottom: 15px;
+.document-header,
+.document-content {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
 }
 
-.label {
-  width: 25%;
-  background-color: #f2f2f2;
-  color: #000;
+.document-header td,
+.document-content td {
+  border: 1px solid #000;
   padding: 10px;
 }
 
-.input {
-  width: 75%;
-  padding: 8px;
-  border: 1px solid #ccc;
+.gray-box {
+  background-color: #e0e0e0;
+  font-weight: bold;
+}
+
+.full-width {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.signature-input {
+  height: 40px;
+  background-color: #ffffff; /* 서명 입력칸 흰색 */
+}
+
+.signature-pad {
+  border: 1px solid black;
+  display: block;
+  margin-bottom: 10px;
+}
+
+button {
+  margin-top: 10px;
 }
