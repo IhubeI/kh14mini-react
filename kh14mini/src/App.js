@@ -7,7 +7,17 @@ import React, { createContext, useEffect, useState } from 'react';
 import NotFoundPage from './components/NotFound/NotFoundPage';
 import Chat from "./components/Chat/Chat";
 import axios from 'axios';
-import ApprovalForm from "./components/Approval/ApprovalForm";
+import  EmploymentContractForm from "./components/Approval/EmploymentContractForm";
+import ResignationForm  from "./components/Approval/ResignationForm";
+import EquipmentManagementForm from "./components/Approval/EquipmentManagementForm";
+import BranchTransferForm from "./components/Approval/BranchTransferForm";
+import LeaveApplicationForm  from "./components/Approval/LeaveApplicationForm";
+import PregnancyWorkReductionForm from "./components/Approval/PregnancyWorkReductionForm";
+import ChildcareLeaveApplicationForm from "./components/Approval/ChildcareLeaveApplicationForm";
+import StaffTrainingApplicationForm  from "./components/Approval/StaffTrainingApplicationForm";
+import OrderDraftForm from "./components/Approval/OrderDraftForm";
+import CorporateSealRequestForm   from "./components/Approval/CorporateSealRequestForm";
+
 
 const App = () => {
   const navigate = useNavigate();
@@ -50,7 +60,17 @@ const App = () => {
         <Route path="/" element={isLoggedIn ? <MainPage /> : <LoginPage />} />
         <Route path="/main/*" element={isLoggedIn ? <MainPage /> : <LoginPage />} />
         <Route path="chat" element={isLoggedIn ? <Chat /> : <LoginPage />} /> {/* /main/chat 경로 */}
-        <Route path="/approval" element={isLoggedIn ? <ApprovalForm /> : <LoginPage />} />
+        <Route path="/test1" element={isLoggedIn ? <EmploymentContractForm/> : <LoginPage />} /> {/* /main/chat 경로 */}
+        <Route path="/test2" element={isLoggedIn ? < ResignationForm /> : <LoginPage />} /> {/* /main/chat 경로 */}
+        <Route path="/test3" element={isLoggedIn ? <EquipmentManagementForm /> : <LoginPage />} /> {/* /main/chat 경로 */}
+        <Route path="/test4" element={isLoggedIn ? <BranchTransferForm /> : <LoginPage />} /> {/* /main/chat 경로 */}
+        <Route path="/test5" element={isLoggedIn ? <LeaveApplicationForm /> : <LoginPage />} /> {/* /main/chat 경로 */}
+        <Route path="/test6" element={isLoggedIn ? <PregnancyWorkReductionForm /> : <LoginPage />} /> {/* /main/chat 경로 */}
+        <Route path="/test7" element={isLoggedIn ? <ChildcareLeaveApplicationForm /> : <LoginPage />} /> {/* /main/chat 경로 */}
+        <Route path="/test8" element={isLoggedIn ? <StaffTrainingApplicationForm /> : <LoginPage  />} /> {/* /main/chat 경로 */}
+        <Route path="/test9" element={isLoggedIn ? <OrderDraftForm /> : <LoginPage />} /> {/* /main/chat 경로 */}
+        <Route path="/test10" element={isLoggedIn ? <CorporateSealRequestForm /> : <LoginPage />} /> {/* /main/chat 경로 */}
+      
         {/* 페이지가 없으면 보여줄 페이지 - 404 Not Found */}
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
