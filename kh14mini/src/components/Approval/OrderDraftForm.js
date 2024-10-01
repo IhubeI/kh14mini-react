@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import SignaturePad from 'react-signature-pad-wrapper';
-import './OrderDraftForm.css';
+import './OrderDraftForm.css'; // CSS 파일 임포트
 
 const OrderDraftForm = () => {
   const [document, setDocument] = useState({
-    emp_signature: '',
-    order_content: '',
-    approval_line: '',
+    emp_no: '',
+    emp_name: '',
+    emp_hp: '',
+    emp_signature: '', // 전자서명
+    request_content: '',
     documentContent: '',
+    createDate: '', // 날짜 필드 추가
   });
 
   const handleChange = (e) => {
@@ -17,8 +20,9 @@ const OrderDraftForm = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    // 저장 로직 (API 연동)
     console.log('제출된 문서:', document);
   };
 
@@ -39,20 +43,22 @@ const OrderDraftForm = () => {
             <td colSpan="4" className="title">주문 기안서</td>
           </tr>
           <tr>
-            <td>서명</td>
-            <td><input type="text" name="emp_signature" value={document.emp_signature} className="signature-input" readOnly /></td>
-            <td>주문 내용</td>
-            <td><input type="text" name="order_content" value={document.order_content} onChange={handleChange} /></td>
+            <td>사원번호</td>
+            <td><input type="text" name="emp_no" value={document.emp_no} onChange={handleChange} /></td>
+            <td>사원명</td>
+            <td><input type="text" name="emp_name" value={document.emp_name} onChange={handleChange} /></td>
           </tr>
           <tr>
-            <td>결재 라인</td>
-            <td colSpan="3"><input type="text" name="approval_line" value={document.approval_line} onChange={handleChange} className="full-width" /></td>
+            <td>휴대전화</td>
+            <td><input type="text" name="emp_hp" value={document.emp_hp} onChange={handleChange} /></td>
+            <td>작성일자</td>
+            <td><input type="date" name="createDate" value={document.createDate} onChange={handleChange} /></td>
           </tr>
         </table>
 
         <table className="document-content">
           <tr>
-            <td className="gray-box">문서 내용</td>
+            <td className="gray-box">내용</td>
             <td colSpan="3"><textarea name="documentContent" value={document.documentContent} onChange={handleChange} className="full-width"></textarea></td>
           </tr>
         </table>

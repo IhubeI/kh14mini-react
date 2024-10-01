@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import SignaturePad from 'react-signature-pad-wrapper';
+import axios from 'axios';
 import './EmploymentContractForm.css';
 
 const EmploymentContractForm = () => {
   const [document, setDocument] = useState({
-    emp_no: '',
-    emp_name: '',
-    emp_hp: '',
-    emp_signature: '',
+    empNo: '',
+    empName: '',
+    empHp: '',
+    empSignature: '',
     documentContent: '',
   });
+
+  const signaturePadRef = useRef(null);
 
   const handleChange = (e) => {
     setDocument({
@@ -18,17 +21,41 @@ const EmploymentContractForm = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('제출된 문서:', document);
+    
+    // 서명 처리
+    if (signaturePadRef.current && !signaturePadRef.current.isEmpty()) {
+      const signature = signaturePadRef.current.toDataURL();
+      setDocument({ ...document, empSignature: signature });
+    }
+
+    try {
+      // 문서 저장
+      await axios.post('http://localhost:8080/api/documents', {
+        documentContent: document.documentContent,
+        empNo: document.empNo,
+        empName: document.empName,
+        empHp: document.empHp,
+        empSignature: document.empSignature,
+      },{withCredentials:true});
+
+      alert('근로계약 요청서가 저장되었습니다.');
+      
+      // 서명 저장
+      await axios.post('http://localhost:8080/emp/saveSignature', {
+        empSignature: document.empSignature,
+      },{withCredentials:true});
+
+    } catch (error) {
+      console.error('저장 실패:', error);
+      alert('저장에 실패했습니다. 다시 시도해 주세요.');
+    }
   };
 
-  const handleSignature = (signaturePad) => {
-    if (!signaturePad.isEmpty()) {
-      const signature = signaturePad.toDataURL();
-      setDocument({ ...document, emp_signature: signature });
-    } else {
-      alert('서명을 입력해주세요.');
+  const clearSignature = () => {
+    if (signaturePadRef.current) {
+      signaturePadRef.current.clear();
     }
   };
 
@@ -40,16 +67,19 @@ const EmploymentContractForm = () => {
             <td colSpan="4" className="title">근로계약 요청서</td>
           </tr>
           <tr>
-            <td>사원번호</td>
-            <td><input type="text" name="emp_no" value={document.emp_no} onChange={handleChange} /></td>
-            <td>사원명</td>
-            <td><input type="text" name="emp_name" value={document.emp_name} onChange={handleChange} /></td>
+            <td className="label">사원번호</td>
+            <td><input type="text" name="empNo" value={document.empNo} onChange={handleChange} className="input" /></td>
+            <td className="label">사원명</td>
+            <td><input type="text" name="empName" value={document.empName} onChange={handleChange} className="input" /></td>
           </tr>
           <tr>
-            <td>휴대전화</td>
-            <td><input type="text" name="emp_hp" value={document.emp_hp} onChange={handleChange} /></td>
-            <td>서명</td>
-            <td><input type="text" name="emp_signature" value={document.emp_signature} className="signature-input" readOnly /></td>
+            <td className="label">휴대전화</td>
+            <td><input type="text" name="empHp" value={document.empHp} onChange={handleChange} className="input" /></td>
+            <td className="label">전자서명</td>
+            <td>
+              <SignaturePad ref={signaturePadRef} />
+              <button type="button" onClick={clearSignature}>서명 초기화</button>
+            </td>
           </tr>
         </table>
 
@@ -59,13 +89,6 @@ const EmploymentContractForm = () => {
             <td colSpan="3"><textarea name="documentContent" value={document.documentContent} onChange={handleChange} className="full-width"></textarea></td>
           </tr>
         </table>
-
-        {/* 전자서명 섹션 */}
-        <div className="section">
-          <label>전자서명</label>
-          <SignaturePad onEnd={(e) => handleSignature(e)} />
-          <button type="button" onClick={() => document.signaturePad.clear()}>서명 초기화</button>
-        </div>
 
         <button type="submit">저장</button>
       </form>
