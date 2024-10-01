@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 
 const SignUpModal = ({ onClose }) => {
@@ -21,7 +22,7 @@ const SignUpModal = ({ onClose }) => {
   });
 
   // 입력 필드 변경 시 데이터 업데이트 함수
-  const handleChange = (e) => {
+  const changeInput = (e) => {
     const { name, value } = e.target;
     setSignUpData((prevData) => ({
       ...prevData,
@@ -30,9 +31,10 @@ const SignUpModal = ({ onClose }) => {
   };
 
   // 회원가입 버튼 클릭 시 데이터 처리 함수
-  const handleSignUp = () => {
+  const SignUp = () => {
+    // 여기에 일단 추가
     console.log('Sign Up Data:', signUpData);
-    // 회원가입 요청을 보내는 코드 추가
+    
     onClose(); // 모달 닫기
   };
 
@@ -57,7 +59,7 @@ const SignUpModal = ({ onClose }) => {
                   className="form-control"
                   name="empId"
                   value={signUpData.empId}
-                  onChange={handleChange}
+                  onChange={changeInput} // Updated here
                 />
               </div>
               <div className="col-auto">
@@ -77,7 +79,7 @@ const SignUpModal = ({ onClose }) => {
                   className="form-control"
                   name="empPassword"
                   value={signUpData.empPassword}
-                  onChange={handleChange}
+                  onChange={changeInput} // Updated here
                 />
               </div>
               <div className="col-auto">
@@ -97,7 +99,7 @@ const SignUpModal = ({ onClose }) => {
                   className="form-control"
                   name="empName"
                   value={signUpData.empName}
-                  onChange={handleChange}
+                  onChange={changeInput} // Updated here
                 />
               </div>
             </div>
@@ -112,7 +114,7 @@ const SignUpModal = ({ onClose }) => {
                   className="form-select"
                   name="empDept"
                   value={signUpData.empDept}
-                  onChange={handleChange}
+                  onChange={changeInput} // Updated here
                 >
                   <option value="">==선택==</option>
                   <option value="개발팀">개발팀</option>
@@ -132,7 +134,7 @@ const SignUpModal = ({ onClose }) => {
                   className="form-select"
                   name="empLevel"
                   value={signUpData.empLevel}
-                  onChange={handleChange}
+                  onChange={changeInput} // Updated here
                 >
                   <option value="">==선택==</option>
                   <option value="개발팀">개발팀</option>
@@ -156,7 +158,7 @@ const SignUpModal = ({ onClose }) => {
                     id="flexRadio1" 
                     value="M" 
                     checked={signUpData.empGender === 'M'}
-                    onChange={handleChange}
+                    onChange={changeInput} // Updated here
                   /> 
                   <label className="form-check-label" htmlFor="flexRadio1"> 남 </label>
                 </div>
@@ -170,7 +172,7 @@ const SignUpModal = ({ onClose }) => {
                     id="flexRadio2" 
                     value="W"
                     checked={signUpData.empGender === 'W'}
-                    onChange={handleChange}
+                    onChange={changeInput} // Updated here
                   /> 
                   <label className="form-check-label" htmlFor="flexRadio2"> 여 </label>
                 </div>
@@ -189,7 +191,7 @@ const SignUpModal = ({ onClose }) => {
                   className="form-control"
                   name="empHp"
                   value={signUpData.empHp}
-                  onChange={handleChange}
+                  onChange={changeInput} // Updated here
                 />
               </div>
             </div>
@@ -208,7 +210,7 @@ const SignUpModal = ({ onClose }) => {
                     id="Email-Username"
                     name="empEmailUsername"
                     value={signUpData.empEmailUsername}
-                    onChange={handleChange}
+                    onChange={changeInput} // Updated here
                   /> 
                   <span className="input-group-text">@</span>
                   <input 
@@ -218,7 +220,7 @@ const SignUpModal = ({ onClose }) => {
                     id="Email-Domain"
                     name="empEmailDomain"
                     value={signUpData.empEmailDomain}
-                    onChange={handleChange}
+                    onChange={changeInput} // Updated here
                   />
                 </div>
               </div>
@@ -235,7 +237,7 @@ const SignUpModal = ({ onClose }) => {
                   id="finalEducationDegree"
                   name="empEdu"
                   value={signUpData.empEdu}
-                  onChange={handleChange}
+                  onChange={changeInput} // Updated here
                 >
                   <option value="">==선택==</option>
                   <option value="고등학교 졸업">고등학교 졸업</option>
@@ -253,73 +255,76 @@ const SignUpModal = ({ onClose }) => {
                 <label htmlFor="dateInputBirth" className="form-label">생년월일</label>
                 <input 
                   type="date" 
-                  className="form-control" 
-                  id="dateInputBirth"
+                  id="dateInputBirth" 
+                  className="form-control"
                   name="empBirth"
                   value={signUpData.empBirth}
-                  onChange={handleChange}
+                  onChange={changeInput} // Updated here
                 />
               </div>
               <div className="col-auto">
-                <label htmlFor="dateInputSDate" className="form-label">입사일</label>
+                <label htmlFor="dateInputSdate" className="form-label">입사일</label>
                 <input 
                   type="date" 
-                  className="form-control" 
-                  id="dateInputSDate"
+                  id="dateInputSdate" 
+                  className="form-control"
                   name="empSdate"
                   value={signUpData.empSdate}
-                  onChange={handleChange}
+                  onChange={changeInput} // Updated here
                 />
               </div>
             </div>
 
-            {/* 우편번호 */}
-            <div className="row mb-3">
+            {/* 우편번호 및 주소 */}
+            <div className="row mb-3 align-items-center">
+              <div className="col-auto">
+                <label htmlFor="modalInputPost" className="col-form-label">우편번호</label>
+              </div>
               <div className="col-auto">
                 <input 
                   type="text" 
-                  className="form-control" 
-                  placeholder="Post"
+                  id="modalInputPost" 
+                  className="form-control"
                   name="empPost"
                   value={signUpData.empPost}
-                  onChange={handleChange}
+                  onChange={changeInput} // Updated here
                 />
               </div>
             </div>
-
-            {/* 주소1 */}
-            <div className="row mb-3">
-              <div className="col-12 col-sm-9">
+            <div className="row mb-3 align-items-center">
+              <div className="col-auto">
+                <label htmlFor="modalInputAddress1" className="col-form-label">주소</label>
+              </div>
+              <div className="col-auto">
                 <input 
                   type="text" 
-                  className="form-control" 
-                  placeholder="Address"
+                  id="modalInputAddress1" 
+                  className="form-control"
                   name="empAddress1"
                   value={signUpData.empAddress1}
-                  onChange={handleChange}
+                  onChange={changeInput} // Updated here
                 />
               </div>
             </div>
-
-            {/* 주소2 */}
-            <div className="row mb-3">
-              <div className="col-12 col-sm-9">
+            <div className="row mb-3 align-items-center">
+              <div className="col-auto">
+                <label htmlFor="modalInputAddress2" className="col-form-label">상세주소</label>
+              </div>
+              <div className="col-auto">
                 <input 
                   type="text" 
+                  id="modalInputAddress2" 
                   className="form-control"
-                  placeholder="AddressDetail" 
                   name="empAddress2"
                   value={signUpData.empAddress2}
-                  onChange={handleChange}
+                  onChange={changeInput} // Updated here
                 />
               </div>
             </div>
           </div>
-
-          {/* 모달 내의 푸터 */}
-          <div className="modal-footer mb-3">
-            <button type="button" className="btn btn-secondary" onClick={onClose}>닫기</button>
-            <button type="button" className="btn btn-primary" onClick={handleSignUp}>가입하기</button>
+          <div className="modal-footer">
+            <button type="button" className="btn btn-secondary" onClick={onClose}>Close</button>
+            <button type="button" className="btn btn-primary" onClick={SignUp}>Sign Up</button>
           </div>
         </div>
       </div>
