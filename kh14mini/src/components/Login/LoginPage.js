@@ -13,7 +13,8 @@ const LoginPage = () => {
     //state
     const [input, setInput] = useState({
         empId: '',
-        empPassword: ''
+        empPassword: '',
+        remeberMe : false
     });
 
     const [showModal, setShowModal] = useState(false); // 모달 표시 상태 관리
@@ -26,6 +27,13 @@ const LoginPage = () => {
             [e.target.name]: e.target.value
         });
     }, [input]);
+
+    const changeChecked = useCallback(e=>{
+        setInput({
+            ...input,
+            [e.target.name] : e.target.checked
+        });
+    },[input]);
 
 
     const loginUser = useCallback(async () => {
@@ -63,7 +71,7 @@ const LoginPage = () => {
                             <label htmlFor="floatingPassword">패스워드</label>
                         </div>
                         <div className="form-check form-check-inline mb-3">
-                            <input className="form-check-input" type="checkbox" value="remember-me" id="rememberMe" />
+                            <input className="form-check-input" name="remeberMe" onChange={changeChecked} type="checkbox" id="rememberMe" />
                             <label className="form-check-label" htmlFor="rememberMe">
                                 Remember me
                             </label>
