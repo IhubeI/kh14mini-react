@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import SignaturePad from 'react-signature-pad-wrapper';
 import axios from 'axios';
 import './EmploymentContractForm.css';
@@ -14,6 +14,28 @@ const EmploymentContractForm = () => {
 
   const signaturePadRef = useRef(null);
 
+  // 컴포넌트가 마운트될 때 현재 사용자 정보 가져오기
+  useEffect(() => {
+    const fetchCurrentUser = async () => {
+      try {
+        const response = await axios.post('http://localhost:8080/emp/me', {}, { withCredentials: true });
+        if (response.data) {
+          setDocument(prevState => ({
+            ...prevState,
+            empNo: response.data.empNo || '', // empNo 필드 설정
+            empName: response.data.userName || '', // 사용자 이름으로 empName 설정
+            empHp: response.data.empHp || '', // 사원 전화번호 필드 설정
+          }));
+        }
+      } catch (error) {
+        console.error('사용자 정보 로드 실패:', error);
+        alert('사용자 정보를 불러오는 데 실패했습니다. 다시 시도해 주세요.');
+      }
+    };
+
+    fetchCurrentUser();
+  }, []);
+
   const handleChange = (e) => {
     setDocument({
       ...document,
@@ -23,33 +45,49 @@ const EmploymentContractForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // 서명 처리
     if (signaturePadRef.current && !signaturePadRef.current.isEmpty()) {
       const signature = signaturePadRef.current.toDataURL();
       setDocument({ ...document, empSignature: signature });
+    } else {
+      alert('서명을 입력해 주세요.'); // 서명이 없을 경우 경고
+      return;
     }
 
     try {
       // 문서 저장
-      await axios.post('http://localhost:8080/api/documents', {
+      const response = await axios.post('http://localhost:8080/api/documents/', {
+        documentTitle: '근로계약 요청서', // 문서 제목
         documentContent: document.documentContent,
         empNo: document.empNo,
         empName: document.empName,
         empHp: document.empHp,
         empSignature: document.empSignature,
-      },{withCredentials:true});
+        categoryCode: 1 // 적절한 카테고리 코드 설정
+      }, { withCredentials: true });
 
-      alert('근로계약 요청서가 저장되었습니다.');
-      
-      // 서명 저장
-      await axios.post('http://localhost:8080/emp/saveSignature', {
-        empSignature: document.empSignature,
-      },{withCredentials:true});
+      if (response.status === 200) {
+        alert('근로계약 요청서가 저장되었습니다.');
+
+        // 서명 저장
+        await axios.post('http://localhost:8080/emp/saveSignature', {
+          empNo: document.empNo,
+          empSignature: document.empSignature,
+        }, { withCredentials: true });
+
+        alert('서명이 성공적으로 저장되었습니다.');
+      }
 
     } catch (error) {
       console.error('저장 실패:', error);
-      alert('저장에 실패했습니다. 다시 시도해 주세요.');
+      if (error.response) {
+        // 서버 응답이 있는 경우
+        alert(`저장에 실패했습니다: ${error.response.data}`);
+      } else {
+        // 네트워크 오류 등
+        alert('서버와의 연결에 실패했습니다. 다시 시도해 주세요.');
+      }
     }
   };
 
@@ -68,13 +106,13 @@ const EmploymentContractForm = () => {
           </tr>
           <tr>
             <td className="label">사원번호</td>
-            <td><input type="text" name="empNo" value={document.empNo} onChange={handleChange} className="input" /></td>
+            <td><input type="text" name="empNo" value={document.empNo} readOnly className="input" /></td>
             <td className="label">사원명</td>
-            <td><input type="text" name="empName" value={document.empName} onChange={handleChange} className="input" /></td>
+            <td><input type="text" name="empName" value={document.empName} readOnly className="input" /></td>
           </tr>
           <tr>
             <td className="label">휴대전화</td>
-            <td><input type="text" name="empHp" value={document.empHp} onChange={handleChange} className="input" /></td>
+            <td><input type="text" name="empHp" value={document.empHp} readOnly className="input" /></td>
             <td className="label">전자서명</td>
             <td>
               <SignaturePad ref={signaturePadRef} />
@@ -86,7 +124,7 @@ const EmploymentContractForm = () => {
         <table className="document-content">
           <tr>
             <td className="gray-box">문서 내용</td>
-            <td colSpan="3"><textarea name="documentContent" value={document.documentContent} onChange={handleChange} className="full-width"></textarea></td>
+            <td colSpan="3"><textarea name="documentContent" value={document.documentContent} onChange={handleChange} className="full-width" required></textarea></td>
           </tr>
         </table>
 
