@@ -35,9 +35,7 @@ const LoginPage = () => {
         try {
             await axios.post("http://localhost:8080/emp/login", input, { withCredentials: true });
             // 로그인 성공 시 로컬 스토리지에 로그인 상태 저장
-            localStorage.setItem('isLoggedIn', true); // 로그인 상태
             console.log("로그인 성공");
-            console.log(localStorage.getItem('isLoggedIn'));
             navigate('/main'); // 로그인 성공 후 /main으로 리다이렉트
 
         } catch (e) {

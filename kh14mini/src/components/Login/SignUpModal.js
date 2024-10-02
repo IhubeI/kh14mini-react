@@ -31,10 +31,11 @@ const SignUpModal = ({ onClose }) => {
   };
 
   // 회원가입 버튼 클릭 시 데이터 처리 함수
-  const SignUp = () => {
-    // 여기에 일단 추가
-    console.log('Sign Up Data:', signUpData);
-    
+  const SignUp = async () => {
+    await axios("http://localhost:8080/emp/",{
+      method:"post",
+      withCredentials : true
+    });
     onClose(); // 모달 닫기
   };
 
