@@ -1,35 +1,14 @@
 import axios from 'axios';
 import Header from '../Header/Header';
-import { Navigate, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+import { userInfoState } from '../Utils/recoil';
 
 const MainPage = () => {
     const navigate = useNavigate();
-    // 사용자 정보를 저장할 상태 추가
-    const [userInfo, setUserInfo] = useState({
-        userName: '',
-        userRole: ''
-    });
 
-    const UserInfo = async () => {
-        try {
-            const resp = await fetch('http://localhost:8080/emp/me', {
-                method: 'POST',
-                credentials: 'include', // 쿠키를 포함하기 위한 옵션
-            });
-
-            // 응답 본문을 JSON으로 변환
-            const data = await resp.json();
-
-            setUserInfo({
-                userName: data.userName,
-                userRole: data.userRole,
-            });
-        } catch (error) {
-            console.error('사용자 정보 가져오기 실패:', error);
-            navigate("/");
-        }
-    };
+    // Recoil에서 사용자 정보 가져오기
+    const userInfo = useRecoilValue(userInfoState);
 
     const Logout = async () => {
         try {
@@ -48,7 +27,6 @@ const MainPage = () => {
             <Header />
             <div className="container">
                 <h1>Main Page!!!</h1>
-                <button className='btn btn-secondary' onClick={UserInfo}>사용자 정보 가져오기</button>
                 <button className='btn btn-secondary' onClick={Logout}>로그아웃</button>
 
 
