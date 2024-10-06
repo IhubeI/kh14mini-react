@@ -16,6 +16,12 @@ import StaffTrainingApplicationForm from "./components/Approval/StaffTrainingApp
 import OrderDraftForm from "./components/Approval/OrderDraftForm";
 import CorporateSealRequestForm from "./components/Approval/CorporateSealRequestForm";
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
+import PortList from './components/Port/PortList';
+import PortRegist from './components/Port/PortRegist';
+import PortDetail from './components/Port/PortDetail';
+import StorageList from './components/Storage/StorageList';
+import StorageDetail from './components/Storage/StorageDetail';
+import StorageRegist from './components/Storage/StorageRegist';
 
 
 const App = () => {
@@ -40,6 +46,13 @@ const App = () => {
       <Route path="/test8" element={<StaffTrainingApplicationForm />} /> {/* /main/chat 경로 */}
       <Route path="/test9" element={<OrderDraftForm />} /> {/* /main/chat 경로 */}
       <Route path="/test10" element={<CorporateSealRequestForm />} /> {/* /main/chat 경로 */}
+      <Route path="/port" element={<PortList />} /> {/* /main/chat 경로 */}
+      <Route path="/port/add" element={<PortRegist />} /> {/* /main/chat 경로 */}
+      <Route path="/port/:portNo" element={<PortDetail />} /> {/* /main/chat 경로 */}
+      <Route path="/storage" element={<StorageList />} /> {/* /main/chat 경로 */}
+      <Route path="/storage/:storageNo" element={<StorageDetail />} /> {/* /main/chat 경로 */}
+      <Route path="/storage/add" element={<StorageRegist />} /> {/* /main/chat 경로 */}
+      
 
 
       {/* 페이지가 없으면 보여줄 페이지 - 404 Not Found */}
