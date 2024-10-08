@@ -22,6 +22,7 @@ import PortDetail from './components/Port/PortDetail';
 import StorageList from './components/Storage/StorageList';
 import StorageDetail from './components/Storage/StorageDetail';
 import StorageRegist from './components/Storage/StorageRegist';
+import Meeting from './components/Meeting/Meeting';
 
 
 const App = () => {
@@ -33,9 +34,10 @@ const App = () => {
       <Route element={<PrivateRoute />}>
         <Route path="/main" element={<MainPage />} />
         <Route path="/chat" element={<Chat />} />
+        <Route path="/meeting" element={<Meeting />} />
       </Route>
       
-
+      
       <Route path="/test1" element={<EmploymentContractForm />} /> {/* /main/chat 경로 */}
       <Route path="/test2" element={< ResignationForm />} /> {/* /main/chat 경로 */}
       <Route path="/test3" element={<EquipmentManagementForm />} /> {/* /main/chat 경로 */}
