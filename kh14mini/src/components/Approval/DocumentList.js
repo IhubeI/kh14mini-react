@@ -52,8 +52,43 @@ const DocumentList = () => {
     setFilteredDocuments(filtered);
   };
 
-  const handleDetailClick = (documentNo) => {
-    navigate(`/test/detail?documentNo=${documentNo}`);
+  const handleDetailClick = (document) => {
+    const { documentNo, documentTitle } = document;
+
+    switch (documentTitle) {
+      case "근로계약 요청서":
+        navigate(`/employment-contract/detail?documentNo=${documentNo}`);
+        break;
+      case "퇴직처리 요청서":
+        navigate(`/resignation/detail?documentNo=${documentNo}`);
+        break;
+      case "비품 지급대장":
+        navigate(`/inventory-supply/detail?documentNo=${documentNo}`);
+        break;
+      case "지점 이동 신청서":
+        navigate(`/branch-transfer/detail?documentNo=${documentNo}`);
+        break;
+      case "휴직 신청서":
+        navigate(`/leave-application/detail?documentNo=${documentNo}`);
+        break;
+      case "임신기 근로단축 신청서":
+        navigate(`/pregnancy-work-reduction/detail?documentNo=${documentNo}`);
+        break;
+      case "육아휴직 신청서":
+        navigate(`/childcare-leave/detail?documentNo=${documentNo}`);
+        break;
+      case "교육연수 참여 신청서":
+        navigate(`/staff-training/detail?documentNo=${documentNo}`);
+        break;
+      case "주문 기안서":
+        navigate(`/order-draft/detail?documentNo=${documentNo}`);
+        break;
+      case "법인 인감 날인 요청서":
+        navigate(`/corporate-seal/detail?documentNo=${documentNo}`);
+        break;
+      default:
+        alert('해당 문서의 상세 페이지를 찾을 수 없습니다.');
+    }
   };
 
   return (
@@ -96,7 +131,7 @@ const DocumentList = () => {
                 <span className={`status ${document.documentStatus}`}>{document.documentStatus}</span>
               </td>
               <td>
-                <button className="confirm-button" onClick={() => handleDetailClick(document.documentNo)}>기안서 확인</button>
+                <button className="confirm-button" onClick={() => handleDetailClick(document)}>기안서 확인</button>
               </td>
             </tr>
           ))}
