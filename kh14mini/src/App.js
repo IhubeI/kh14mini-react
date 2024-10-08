@@ -17,6 +17,8 @@ import OrderDraftForm from "./components/Approval/OrderDraftForm";
 import CorporateSealRequestForm from "./components/Approval/CorporateSealRequestForm";
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import DocumentList from './components/Approval/DocumentList';
+import DocumentDetail from './components/Approval/DocumentDetail';
+
 
 
 const App = () => {
@@ -29,8 +31,10 @@ const App = () => {
         <Route path="/main" element={<MainPage />} />
         <Route path="/chat" element={<Chat />} />
       </Route>
+
       
-      <Route path="/testList" element={<DocumentList />} />
+      <Route path="/test/list" element={<DocumentList />} />
+      <Route path="/test/detail" element={<DocumentDetail />} />
       <Route path="/test1" element={<EmploymentContractForm />} /> 
       <Route path="/test2" element={< ResignationForm />} /> 
       <Route path="/test3" element={<EquipmentManagementForm />} /> 
