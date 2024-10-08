@@ -18,6 +18,7 @@ import CorporateSealRequestForm from "./components/Approval/CorporateSealRequest
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import DocumentList from './components/Approval/DocumentList';
 import DocumentDetail from './components/Approval/DocumentDetail';
+import Meeting from './components/Meeting/Meeting';
 
 
 
@@ -30,8 +31,8 @@ const App = () => {
       <Route element={<PrivateRoute />}>
         <Route path="/main" element={<MainPage />} />
         <Route path="/chat" element={<Chat />} />
+        <Route path="/meeting" element={<Meeting />} />
       </Route>
-
       
       <Route path="/test/list" element={<DocumentList />} />
       <Route path="/test/detail" element={<DocumentDetail />} />
