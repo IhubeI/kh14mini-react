@@ -56,23 +56,30 @@ function DocumentList() {
           </tr>
         </thead>
         <tbody>
-          {documents.map((document) => (
-            <tr key={document.documentNo}>
-              <td><input type="checkbox" /></td>
-              <td>{document.documentCreateAt}</td>
-              <td>{document.documentTitle}</td>
-              <td>{document.documentCreateBy}</td>
-              <td>{document.approvalEmp}</td>
-              <td>
-                <span className={document.documentStatus === '승인완료' ? 'approved' : 
-                                document.documentStatus === '반려됨' ? 'rejected' : 'progress'}>
-                  {document.documentStatus}
-                </span>
-              </td>
-              <td><button onClick={() => approveDocument(document.documentNo)}>기안서 확인</button></td>
-            </tr>
-          ))}
-        </tbody>
+  {documents && documents.length > 0 ? (
+    documents.map((document) => (
+      <tr key={document.documentNo}>
+        <td><input type="checkbox" /></td>
+        <td>{document.documentCreateAt}</td>
+        <td>{document.documentTitle}</td>
+        <td>{document.documentCreateBy}</td>
+        <td>{document.approvalEmp}</td>
+        <td>
+          <span className={document.documentStatus === '승인완료' ? 'approved' : 
+                          document.documentStatus === '반려됨' ? 'rejected' : 'progress'}>
+            {document.documentStatus}
+          </span>
+        </td>
+        <td><button onClick={() => approveDocument(document.documentNo)}>기안서 확인</button></td>
+      </tr>
+    ))
+  ) : (
+    <tr>
+      <td colSpan="7">문서가 없습니다.</td>
+    </tr>
+  )}
+</tbody>
+
       </table>
     </div>
   );
