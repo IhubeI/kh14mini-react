@@ -29,7 +29,6 @@ const App = () => {
         <Route path="/chat" element={<Chat />} />
       </Route>
       
-
       <Route path="/test1" element={<EmploymentContractForm />} /> {/* /main/chat 경로 */}
       <Route path="/test2" element={< ResignationForm />} /> {/* /main/chat 경로 */}
       <Route path="/test3" element={<EquipmentManagementForm />} /> {/* /main/chat 경로 */}
