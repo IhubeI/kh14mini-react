@@ -26,17 +26,17 @@ const userInfoSelector = selector({
     key: 'userInfoSelector',
     get: async () => {
         try {
-            const response = await axios.post('http://localhost:8080/emp/me', {}, {
+            const resp = await axios.post('http://localhost:8080/emp/me', {}, {
                 withCredentials: true, // 쿠키를 포함하여 요청
             });
 
-            const data = response.data;
+            const data = resp.data;
             return {
                 userName: data.userName,
                 userRole: data.userRole,
             };
         } catch (error) {
-            console.error('사용자 정보 가져오기 실패:', error);
+            console.error('사용자 정보 가져오기 실패:', error.response.status);
             throw error; // 에러를 처리
         }
     },

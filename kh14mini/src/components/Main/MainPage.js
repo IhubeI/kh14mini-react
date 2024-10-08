@@ -1,8 +1,8 @@
 import axios from 'axios';
-import Header from '../Header/Header';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { userInfoState } from '../Utils/recoil';
+import Menu from './../Menu/Menu';
 
 const MainPage = () => {
     const navigate = useNavigate();
@@ -24,7 +24,7 @@ const MainPage = () => {
 
     return (
         <>
-            <Header />
+            <Menu />
             <div className="container">
                 <h1>Main Page!!!</h1>
                 <button className='btn btn-secondary' onClick={Logout}>로그아웃</button>
