@@ -22,7 +22,7 @@ import DocumentDetail from './components/Approval/DocumentDetail';
 
 const App = () => {
   return (
-    <Router>
+   
       <Routes>
         <Route path="/" element={<LoginPage />} />
         
@@ -48,7 +48,7 @@ const App = () => {
         {/* 페이지가 없으면 보여줄 페이지 - 404 Not Found */}
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
-    </Router>
+   
   );
 };
 
