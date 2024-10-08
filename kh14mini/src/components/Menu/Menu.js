@@ -1,9 +1,23 @@
-// src/components/Menu.js
-
+import axios from 'axios';
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 const Menu = () => {
+
+    const navigate = useNavigate();
+
+    const Logout = async () => {
+        try {
+            await axios.post('http://localhost:8080/emp/logout', {}, {
+                withCredentials: true, // 쿠키 전송을 허용
+            });
+            console.log('로그아웃 성공');
+            navigate('/');
+        } catch (error) {
+            console.error('로그아웃 실패:', error.response ? error.response.data : error.message);
+        }
+    };
+
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <div className="container-fluid">
@@ -131,26 +145,14 @@ const Menu = () => {
                                 Corporate Seal Request
                             </NavLink>
                         </li>
-                    </ul>
-                    <ul className="navbar-nav">
-                        {/* Contact Dropdown */}
-                        <li className="nav-item dropdown">
-                            <a className="nav-link dropdown-toggle" href="#" id="contactDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Contact
-                            </a>
-                            <ul className="dropdown-menu dropdown-menu-dark" aria-labelledby="contactDropdown">
-                                <li><NavLink to="/twitter" className={({ isActive }) => isActive ? "dropdown-item active" : "dropdown-item"}>Follow on Twitter</NavLink></li>
-                                <li><NavLink to="/facebook" className={({ isActive }) => isActive ? "dropdown-item active" : "dropdown-item"}>Like on Facebook</NavLink></li>
-                                <li><NavLink to="/email" className={({ isActive }) => isActive ? "dropdown-item active" : "dropdown-item"}>Email me</NavLink></li>
-                            </ul>
-                        </li>
                         {/* Logout (Optional) */}
                         <li className="nav-item">
                             <NavLink
-                                to="/logout"
+                                to="/"
                                 className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
+                                onClick={Logout} // 클릭 시 Logout 함수 호출
                             >
-                                Logout
+                                로그아웃
                             </NavLink>
                         </li>
                     </ul>
