@@ -49,12 +49,22 @@ const Menu = () => {
                         {/* Document List */}
                         <li className="nav-item">
                             <NavLink
-                                to="/testList"
+                                to="/test/list"
                                 className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
                             >
                                 Document List
                             </NavLink>
                         </li>
+
+                        <li className="nav-item">
+                            <NavLink
+                                to="/test/detail"
+                                className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
+                            >
+                                Document detail
+                            </NavLink>
+                        </li>
+
                         {/* Employment Contract */}
                         <li className="nav-item">
                             <NavLink
