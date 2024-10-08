@@ -103,3 +103,9 @@ button {
   padding: 10px;
   box-sizing: border-box;
 }
+img {
+  width: 200px;
+  height: 100px;
+  object-fit: contain;
+  background-color: white; /* 배경을 검은색이 아닌 흰색으로 */
+}
