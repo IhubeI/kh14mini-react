@@ -16,6 +16,7 @@ import StaffTrainingApplicationForm from "./components/Approval/StaffTrainingApp
 import OrderDraftForm from "./components/Approval/OrderDraftForm";
 import CorporateSealRequestForm from "./components/Approval/CorporateSealRequestForm";
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
+import DocumentList from './components/Approval/DocumentList';
 
 
 const App = () => {
@@ -29,16 +30,17 @@ const App = () => {
         <Route path="/chat" element={<Chat />} />
       </Route>
       
-      <Route path="/test1" element={<EmploymentContractForm />} /> {/* /main/chat 경로 */}
-      <Route path="/test2" element={< ResignationForm />} /> {/* /main/chat 경로 */}
-      <Route path="/test3" element={<EquipmentManagementForm />} /> {/* /main/chat 경로 */}
-      <Route path="/test4" element={<BranchTransferForm />} /> {/* /main/chat 경로 */}
-      <Route path="/test5" element={<LeaveApplicationForm />} /> {/* /main/chat 경로 */}
-      <Route path="/test6" element={<PregnancyWorkReductionForm />} /> {/* /main/chat 경로 */}
-      <Route path="/test7" element={<ChildcareLeaveApplicationForm />} /> {/* /main/chat 경로 */}
-      <Route path="/test8" element={<StaffTrainingApplicationForm />} /> {/* /main/chat 경로 */}
-      <Route path="/test9" element={<OrderDraftForm />} /> {/* /main/chat 경로 */}
-      <Route path="/test10" element={<CorporateSealRequestForm />} /> {/* /main/chat 경로 */}
+      <Route path="/testList" element={<DocumentList />} />
+      <Route path="/test1" element={<EmploymentContractForm />} /> 
+      <Route path="/test2" element={< ResignationForm />} /> 
+      <Route path="/test3" element={<EquipmentManagementForm />} /> 
+      <Route path="/test4" element={<BranchTransferForm />} /> 
+      <Route path="/test5" element={<LeaveApplicationForm />} /> 
+      <Route path="/test6" element={<PregnancyWorkReductionForm />} /> 
+      <Route path="/test7" element={<ChildcareLeaveApplicationForm />} /> 
+      <Route path="/test8" element={<StaffTrainingApplicationForm />} /> 
+      <Route path="/test9" element={<OrderDraftForm />} /> 
+      <Route path="/test10" element={<CorporateSealRequestForm />} /> 
 
 
       {/* 페이지가 없으면 보여줄 페이지 - 404 Not Found */}
