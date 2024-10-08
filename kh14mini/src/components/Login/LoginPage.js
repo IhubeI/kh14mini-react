@@ -14,27 +14,25 @@ const LoginPage = () => {
     const [input, setInput] = useState({
         empId: '',
         empPassword: '',
-        remeberMe : false
+        remeberMe: false,
     });
 
     const [showModal, setShowModal] = useState(false); // 모달 표시 상태 관리
-
 
     //callback
     const changeInput = useCallback(e => {
         setInput({
             ...input,
-            [e.target.name]: e.target.value
+            [e.target.name]: e.target.value,
         });
     }, [input]);
 
-    const changeChecked = useCallback(e=>{
+    const changeChecked = useCallback(e => {
         setInput({
             ...input,
-            [e.target.name] : e.target.checked
+            [e.target.name]: e.target.checked,
         });
-    },[input]);
-
+    }, [input]);
 
     const loginUser = useCallback(async () => {
         //input의 형식 검사 후 차단 또는 허용 
@@ -52,6 +50,13 @@ const LoginPage = () => {
 
     }, [input, navigate]);
 
+    // Enter 키를 눌렀을 때 로그인 함수 호출
+    const KeyDown = useCallback((e) => {
+        if (e.key === 'Enter') {
+            loginUser();
+        }
+    }, [loginUser]);
+
     return (
         <div className="container col-xl-10 col-xxl-8 px-4 py-5">
             <div className="row align-items-center g-lg-5 py-5">
@@ -63,15 +68,39 @@ const LoginPage = () => {
                     {/* 로그인 */}
                     <div className="p-4 p-md-5 border rounded-3 bg-body-tertiary" autoComplete="off">
                         <div className="form-floating mb-3">
-                            <input type="text" className="form-control" id="floatingInput" name="empId" placeholder="아이디" value={input.empId} onChange={changeInput} />
+                            <input 
+                                type="text" 
+                                className="form-control" 
+                                id="floatingInput" 
+                                name="empId" 
+                                placeholder="아이디" 
+                                value={input.empId} 
+                                onChange={changeInput} 
+                                onKeyDown={KeyDown} // Enter 키 이벤트 추가
+                            />
                             <label htmlFor="floatingInput">아이디</label>
                         </div>
                         <div className="form-floating mb-3">
-                            <input type="password" className="form-control" id="floatingPassword" name="empPassword" placeholder="패스워드" value={input.empPassword} onChange={changeInput} />
+                            <input 
+                                type="password" 
+                                className="form-control" 
+                                id="floatingPassword" 
+                                name="empPassword" 
+                                placeholder="패스워드" 
+                                value={input.empPassword} 
+                                onChange={changeInput} 
+                                onKeyDown={KeyDown} // Enter 키 이벤트 추가
+                            />
                             <label htmlFor="floatingPassword">패스워드</label>
                         </div>
                         <div className="form-check form-check-inline mb-3">
-                            <input className="form-check-input" name="remeberMe" onChange={changeChecked} type="checkbox" id="rememberMe" />
+                            <input 
+                                className="form-check-input" 
+                                name="remeberMe" 
+                                onChange={changeChecked} 
+                                type="checkbox" 
+                                id="rememberMe" 
+                            />
                             <label className="form-check-label" htmlFor="rememberMe">
                                 Remember me
                             </label>

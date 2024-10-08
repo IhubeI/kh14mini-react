@@ -1,16 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import SignaturePad from 'react-signature-pad-wrapper';
+import axios from 'axios';
 import './InventorySupplyLog.css';
 
-const  InventorySupplyLog = () => {
+const InventorySupplyLog = () => {
   const [document, setDocument] = useState({
-    emp_name: '',
     emp_no: '',
+    emp_name: '',
+    emp_hp: '',
     emp_signature: '',
     supplies_name: '',
     payment_date: '',
     documentContent: '',
   });
+
+  const signaturePadRef = useRef(null);
+
+  useEffect(() => {
+    const fetchCurrentUser = async () => {
+      try {
+        const response = await axios.post('http://localhost:8080/emp/me', {}, { withCredentials: true });
+        if (response.data) {
+          setDocument(prevState => ({
+            ...prevState,
+            emp_no: response.data.empNo || '',
+            emp_name: response.data.userName || '',
+            emp_hp: response.data.empHp || '',
+          }));
+        }
+      } catch (error) {
+        console.error('사용자 정보 로드 실패:', error);
+        alert('사용자 정보를 불러오는 데 실패했습니다. 다시 시도해 주세요.');
+      }
+    };
+
+    fetchCurrentUser();
+  }, []);
 
   const handleChange = (e) => {
     setDocument({
@@ -24,12 +49,18 @@ const  InventorySupplyLog = () => {
     console.log('제출된 문서:', document);
   };
 
-  const handleSignature = (signaturePad) => {
-    if (!signaturePad.isEmpty()) {
-      const signature = signaturePad.toDataURL();
+  const handleSignature = () => {
+    if (signaturePadRef.current && !signaturePadRef.current.isEmpty()) {
+      const signature = signaturePadRef.current.toDataURL('image/jpeg', 0.5);
       setDocument({ ...document, emp_signature: signature });
     } else {
       alert('서명을 입력해주세요.');
+    }
+  };
+
+  const clearSignature = () => {
+    if (signaturePadRef.current) {
+      signaturePadRef.current.clear();
     }
   };
 
@@ -37,40 +68,43 @@ const  InventorySupplyLog = () => {
     <div className="document-container">
       <form onSubmit={handleSubmit}>
         <table className="document-header">
-          <tr>
-            <td colSpan="4" className="title">비품 지급대장</td>
-          </tr>
-          <tr>
-            <td>사원명</td>
-            <td><input type="text" name="emp_name" value={document.emp_name} onChange={handleChange} /></td>
-            <td>지급자</td>
-            <td><input type="text" name="emp_no" value={document.emp_no} onChange={handleChange} /></td>
-          </tr>
-          <tr>
-            <td>서명</td>
-            <td><input type="text" name="emp_signature" value={document.emp_signature} className="signature-input" readOnly /></td>
-            <td>비품명</td>
-            <td><input type="text" name="supplies_name" value={document.supplies_name} onChange={handleChange} /></td>
-          </tr>
-          <tr>
-            <td>지급일자</td>
-            <td><input type="date" name="payment_date" value={document.payment_date} onChange={handleChange} /></td>
-            <td colSpan="2"></td>
-          </tr>
+          <tbody>
+            <tr>
+              <td colSpan="4" className="title">비품 지급대장</td>
+            </tr>
+            <tr>
+              <td>사원번호</td>
+              <td><input type="text" name="emp_no" value={document.emp_no} readOnly /></td>
+              <td>사원명</td>
+              <td><input type="text" name="emp_name" value={document.emp_name} readOnly /></td>
+            </tr>
+            <tr>
+              <td>휴대전화</td>
+              <td><input type="text" name="emp_hp" value={document.emp_hp} readOnly /></td>
+              <td>비품명</td>
+              <td><input type="text" name="supplies_name" value={document.supplies_name} onChange={handleChange} /></td>
+            </tr>
+            <tr>
+              <td>지급일자</td>
+              <td><input type="date" name="payment_date" value={document.payment_date} onChange={handleChange} /></td>
+              <td colSpan="2"></td>
+            </tr>
+          </tbody>
         </table>
 
         <table className="document-content">
-          <tr>
-            <td className="gray-box">문서 내용</td>
-            <td colSpan="3"><textarea name="documentContent" value={document.documentContent} onChange={handleChange} className="full-width"></textarea></td>
-          </tr>
+          <tbody>
+            <tr>
+              <td className="gray-box">문서 내용</td>
+              <td colSpan="3"><textarea name="documentContent" value={document.documentContent} onChange={handleChange} className="full-width"></textarea></td>
+            </tr>
+          </tbody>
         </table>
 
-        {/* 전자서명 섹션 */}
         <div className="section">
           <label>전자서명</label>
-          <SignaturePad onEnd={(e) => handleSignature(e)} />
-          <button type="button" onClick={() => document.signaturePad.clear()}>서명 초기화</button>
+          <SignaturePad ref={signaturePadRef} onEnd={handleSignature} />
+          <button type="button" onClick={clearSignature}>서명 초기화</button>
         </div>
 
         <button type="submit">저장</button>
@@ -79,4 +113,4 @@ const  InventorySupplyLog = () => {
   );
 };
 
-export default  InventorySupplyLog;
+export default InventorySupplyLog;

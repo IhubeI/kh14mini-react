@@ -16,13 +16,10 @@ import StaffTrainingApplicationForm from "./components/Approval/StaffTrainingApp
 import OrderDraftForm from "./components/Approval/OrderDraftForm";
 import CorporateSealRequestForm from "./components/Approval/CorporateSealRequestForm";
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
-import PortList from './components/Port/PortList';
-import PortRegist from './components/Port/PortRegist';
-import PortDetail from './components/Port/PortDetail';
-import StorageList from './components/Storage/StorageList';
-import StorageDetail from './components/Storage/StorageDetail';
-import StorageRegist from './components/Storage/StorageRegist';
+import DocumentList from './components/Approval/DocumentList';
+import DocumentDetail from './components/Approval/DocumentDetail';
 import Meeting from './components/Meeting/Meeting';
+
 
 
 const App = () => {
@@ -37,24 +34,18 @@ const App = () => {
         <Route path="/meeting" element={<Meeting />} />
       </Route>
       
-      
-      <Route path="/test1" element={<EmploymentContractForm />} /> {/* /main/chat 경로 */}
-      <Route path="/test2" element={< ResignationForm />} /> {/* /main/chat 경로 */}
-      <Route path="/test3" element={<EquipmentManagementForm />} /> {/* /main/chat 경로 */}
-      <Route path="/test4" element={<BranchTransferForm />} /> {/* /main/chat 경로 */}
-      <Route path="/test5" element={<LeaveApplicationForm />} /> {/* /main/chat 경로 */}
-      <Route path="/test6" element={<PregnancyWorkReductionForm />} /> {/* /main/chat 경로 */}
-      <Route path="/test7" element={<ChildcareLeaveApplicationForm />} /> {/* /main/chat 경로 */}
-      <Route path="/test8" element={<StaffTrainingApplicationForm />} /> {/* /main/chat 경로 */}
-      <Route path="/test9" element={<OrderDraftForm />} /> {/* /main/chat 경로 */}
-      <Route path="/test10" element={<CorporateSealRequestForm />} /> {/* /main/chat 경로 */}
-      <Route path="/port" element={<PortList />} /> {/* /main/chat 경로 */}
-      <Route path="/port/add" element={<PortRegist />} /> {/* /main/chat 경로 */}
-      <Route path="/port/:portNo" element={<PortDetail />} /> {/* /main/chat 경로 */}
-      <Route path="/storage" element={<StorageList />} /> {/* /main/chat 경로 */}
-      <Route path="/storage/:storageNo" element={<StorageDetail />} /> {/* /main/chat 경로 */}
-      <Route path="/storage/add" element={<StorageRegist />} /> {/* /main/chat 경로 */}
-      
+      <Route path="/test/list" element={<DocumentList />} />
+      <Route path="/test/detail" element={<DocumentDetail />} />
+      <Route path="/test1" element={<EmploymentContractForm />} /> 
+      <Route path="/test2" element={< ResignationForm />} /> 
+      <Route path="/test3" element={<EquipmentManagementForm />} /> 
+      <Route path="/test4" element={<BranchTransferForm />} /> 
+      <Route path="/test5" element={<LeaveApplicationForm />} /> 
+      <Route path="/test6" element={<PregnancyWorkReductionForm />} /> 
+      <Route path="/test7" element={<ChildcareLeaveApplicationForm />} /> 
+      <Route path="/test8" element={<StaffTrainingApplicationForm />} /> 
+      <Route path="/test9" element={<OrderDraftForm />} /> 
+      <Route path="/test10" element={<CorporateSealRequestForm />} /> 
 
 
       {/* 페이지가 없으면 보여줄 페이지 - 404 Not Found */}
