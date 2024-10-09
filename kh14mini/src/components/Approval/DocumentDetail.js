@@ -72,7 +72,7 @@ const DocumentDetail = () => {
 
     // 서명 처리
     if (signaturePadRef.current && !signaturePadRef.current.isEmpty()) {
-      signature = signaturePadRef.current.toDataURL('image/jpeg');
+      signature = signaturePadRef.current.toDataURL();
       setDocument((prevState) => ({
         ...prevState,
         empSignature: signature,
