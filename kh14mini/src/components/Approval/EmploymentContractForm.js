@@ -49,7 +49,8 @@ const EmploymentContractForm = () => {
     // 서명 처리
     let signature = '';
     if (signaturePadRef.current && !signaturePadRef.current.isEmpty()) {
-      signature = signaturePadRef.current.toDataURL('image/jpeg', 0.5);
+      signature = signaturePadRef.current.toDataURL();
+
     } else {
       alert('서명을 입력해 주세요.');
       return;
