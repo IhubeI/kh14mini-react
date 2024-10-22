@@ -18,6 +18,7 @@ import CorporateSealRequestForm from "./components/Approval/CorporateSealRequest
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import DocumentList from './components/Approval/DocumentList';
 import DocumentDetail from './components/Approval/DocumentDetail';
+import Category from "./components/Category/Category";
 
 
 const App = () => {
@@ -44,6 +45,7 @@ const App = () => {
       <Route path="/test8" element={<StaffTrainingApplicationForm />} /> 
       <Route path="/test9" element={<OrderDraftForm />} /> 
       <Route path="/test10" element={<CorporateSealRequestForm />} /> 
+      <Route path="/category" element={<Category/>}/>
 
         {/* 페이지가 없으면 보여줄 페이지 - 404 Not Found */}
         <Route path="*" element={<NotFoundPage />} />
